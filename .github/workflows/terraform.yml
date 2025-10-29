@@ -4,7 +4,6 @@ on:  workflow_dispatch
 permissions:
   id-token: write
   contents: read 
-
   
 jobs:
   terraform-job:
@@ -34,7 +33,6 @@ jobs:
         id: init
         run: terraform init -input=false
         working-directory: Environment/test
-
 
       - name: Terraform Validate
         id: validate
