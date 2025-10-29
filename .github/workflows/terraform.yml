@@ -33,6 +33,18 @@ jobs:
         id: init
         run: terraform init -input=false
         working-directory: Environment/test
-          
+
+
+      - name: Terraform Validate
+        id: validate
+        run: terraform validate -no-color
+        working-directory: Environment/test
+
+      - name: Terraform Plan
+        id: plan
+        run: terraform plan -no-color -input=false
+        continue-on-error: true
+        working-directory: Environment/test
+                
       
     
