@@ -6,9 +6,9 @@ terraform {
     }
   }
     backend "azurerm" {
-      resource_group_name = "github_action"
-      storage_account_name = "githuaction8696"
-      container_name = "githubaction"
+      resource_group_name = "RG_Practice1"
+      storage_account_name = "shubhamsinghvi40342411"
+      container_name = "finaltest"
       key = "test.tfstate"
     }
 }
