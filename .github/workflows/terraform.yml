@@ -48,12 +48,22 @@ jobs:
         id: validate
         run: terraform validate -no-color
         working-directory: Environment/test
+        env:
+         ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+         ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+         ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+         ARM_USE_OIDC: true
 
       - name: Terraform Plan
         id: plan
         run: terraform plan -no-color -input=false
         continue-on-error: true
         working-directory: Environment/test
+        env:
+         ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+         ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+         ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+         ARM_USE_OIDC: true
                 
       
     
