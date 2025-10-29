@@ -1,0 +1,7 @@
+name: "Infra-Pipeline"
+on:  workflow_dispatch
+
+jobs:
+  Terraform-job
+    runs-on: self-hosted
+    
