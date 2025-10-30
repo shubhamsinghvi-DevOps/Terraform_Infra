@@ -1,5 +1,5 @@
 
-name: "Infra-Pipeline"
+name: "terraform-plan-workflow"
 on:  workflow_dispatch
 
 permissions:
