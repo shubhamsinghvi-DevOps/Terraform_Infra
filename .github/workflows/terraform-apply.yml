@@ -61,12 +61,6 @@ jobs:
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
           
-      - name: Terraform fmt
-        id: fmt
-        run: terraform fmt -check
-        continue-on-error: true
-        working-directory: Environment/test
-               
       - name: Terraform Init
         id: init
         run: terraform init -input=false
@@ -77,8 +71,8 @@ jobs:
         run: terraform validate -no-color
         working-directory: Environment/test
 
-      - name: Terraform Plan
-        id: plan
-        run: terraform plan -no-color -input=false
+      - name: Terraform Apply
+        id: Apply
+        run: terraform apply --auto-approve
         continue-on-error: true
         working-directory: Environment/test
