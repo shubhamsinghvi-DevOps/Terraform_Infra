@@ -82,10 +82,3 @@ jobs:
         run: terraform plan -no-color -input=false
         continue-on-error: true
         working-directory: Environment/test
-
-      - name: Manual Workflow Approval
-        uses: trstringer/manual-approval@v1.9.0
-        timeout-minutes: 60
-        
-    
-
