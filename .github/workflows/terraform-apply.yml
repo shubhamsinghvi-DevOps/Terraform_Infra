@@ -1,0 +1,96 @@
+name: "Infra-Pipeline"
+on:  workflow_dispatch
+
+permissions:
+  id-token: write
+  contents: read 
+
+env:
+  ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+  ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+  ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+  ARM_USE_OIDC: true  
+
+jobs:
+  terraform-Init-plan:
+    runs-on: self-hosted
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5.0.0
+      
+      - name: Azure Login
+        uses: azure/login@v2.3.0
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          
+      - name: Terraform fmt
+        id: fmt
+        run: terraform fmt -check
+        continue-on-error: true
+        working-directory: Environment/test
+               
+      - name: Terraform Init
+        id: init
+        run: terraform init -input=false
+        working-directory: Environment/test
+
+      - name: Terraform Validate
+        id: validate
+        run: terraform validate -no-color
+        working-directory: Environment/test
+
+      - name: Terraform Plan
+        id: plan
+        run: terraform plan -no-color -input=false
+        continue-on-error: true
+        working-directory: Environment/test
+
+      - name: Manual Workflow Approval
+        uses: trstringer/manual-approval@v1.9.0
+        timeout-minutes: 60
+        
+    
+  terraform--plan-apply:
+    runs-on: self-hosted
+    needs: terraform-Init-plan
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5.0.0
+      
+      - name: Azure Login
+        uses: azure/login@v2.3.0
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          
+      - name: Terraform fmt
+        id: fmt
+        run: terraform fmt -check
+        continue-on-error: true
+        working-directory: Environment/test
+               
+      - name: Terraform Init
+        id: init
+        run: terraform init -input=false
+        working-directory: Environment/test
+
+      - name: Terraform Validate
+        id: validate
+        run: terraform validate -no-color
+        working-directory: Environment/test
+
+      - name: Terraform Plan
+        id: plan
+        run: terraform plan -no-color -input=false
+        continue-on-error: true
+        working-directory: Environment/test
+
+      - name: Manual Workflow Approval
+        uses: trstringer/manual-approval@v1.9.0
+        timeout-minutes: 60
+        
+    
+
