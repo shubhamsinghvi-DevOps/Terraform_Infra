@@ -5,7 +5,7 @@ variable "rg_name" {}
 variable "dns_prefix" {}
 
 variable "vm_size" {
-  default="Standard_D2_v2"
+  default="Standard_B2s"
 }
 
 
