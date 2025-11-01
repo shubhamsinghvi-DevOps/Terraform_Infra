@@ -29,7 +29,7 @@ module "sql_server_creation" {
   rg_name        = "rg_todo"
   location       = "central india"
   admin_password = "admin@123"
-  admin_username = "admin"
+  admin_username = "sqladminuser"
   tags           = local.common_tags
 }
 
@@ -54,6 +54,7 @@ module "aks_todoapp" {
 }
 
 module "publicip" {
+  depends_on = [ module.rg_creation ]
   source            = "../../Modules/9_azurerm_publicip"
   pip_name          = "piptodoapp"
   location          = "central india"
