@@ -52,3 +52,12 @@ module "aks_todoapp" {
   dns_prefix = "aks-test-todoapp"
   tags       = local.common_tags
 }
+
+module "publicip" {
+  source            = "../../Modules/9_azurerm_publicip"
+  pip_name          = "piptodoapp"
+  location          = "central india"
+  rg_name           = "rg-todo"
+  allocation_method = "Static"
+  tags              = local.common_tags
+}
